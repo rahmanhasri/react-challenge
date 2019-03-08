@@ -1,0 +1,12 @@
+
+
+var config = {
+  apiKey: "AIzaSyDtpWeX0Pdjd3tUHmObf41d06u_bSrF708",
+  authDomain: "pokepoke-320e6.firebaseapp.com",
+  databaseURL: "https://pokepoke-320e6.firebaseio.com",
+  projectId: "pokepoke-320e6",
+  storageBucket: "pokepoke-320e6.appspot.com",
+  messagingSenderId: "947313841588"
+};
+firebase.initializeApp(config);
+

@@ -1,0 +1,66 @@
+<script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDtpWeX0Pdjd3tUHmObf41d06u_bSrF708",
+    authDomain: "pokepoke-320e6.firebaseapp.com",
+    databaseURL: "https://pokepoke-320e6.firebaseio.com",
+    projectId: "pokepoke-320e6",
+    storageBucket: "pokepoke-320e6.appspot.com",
+    messagingSenderId: "947313841588"
+  };
+  firebase.initializeApp(config);
+</script>
+
+
+// backup home
+import React, { Component } from 'react';
+import axios from 'axios';
+
+// Components
+import Single from '../components/Single';
+
+export default class Home extends Component {
+  componentDidMount() {
+    let randomOffset = ''
+    while(randomOffset.length < 3) {
+      randomOffset+= Math.floor(Math.random() * 10)
+      if(randomOffset > '850') {
+        randomOffset = ''
+      }
+    }
+    console.log(randomOffset);
+    axios({
+      method: 'get',
+      url: `https://pokeapi.co/api/v2/pokemon?limit=12&offset=${randomOffset}`,
+    })
+      .then(({ data }) => {
+        let input = data.results.map(char => { 
+            return { name: char.name, url: char.url }
+          });
+        // console.log(input);
+        this.setState({
+          characters: [...input]
+        });
+      })
+      .catch(({ response }) => {
+        console.log(response);
+      })
+  }
+
+  state = {
+    characters: [],
+    hello: 'hello',
+  }
+
+  render() {
+    const { characters } = this.state;
+    return (
+      <div className="container">
+        <div className="columns is-multiline is-mobile">
+          {characters.map((char, index) => <Single key={index} char={char} ></Single>)}
+        </div>
+      </div>
+    )
+  }
+}
